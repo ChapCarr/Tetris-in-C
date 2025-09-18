@@ -17,9 +17,9 @@ void initGrid(int (*grid)[20]){
 
 int isValid(int x, int y, int (*grid)[20]){
   // check walls  
-  if(x >= 9 || x < 0){
-    return 0;
-  }
+ // if(x >= 9 || x < 0){
+   // return 0;
+  //}
   // check bottom
   if(y >= 20){
     return 0;
@@ -68,6 +68,30 @@ void drawGrid(int (*grid)[20]){
   }
 }
 
+void placeCurrentToGrid(int (*grid)[20], int (*curr)[4], int x, int y){
+  
+
+
+
+
+}
+
+int getWidth(int (*curr)[4]){
+  int width = 0;
+  for(int i = 0; i < 4; i++){
+    for(int j = 0; j < 4; j++){
+      if(curr[i][j] == 1){
+        if(j > width){
+          width = j;
+        }
+      }
+    }
+  }
+  return width;
+}
+
+
+
 int main(void)
 {
    // const int screenWidth = 400;
@@ -112,7 +136,8 @@ int main(void)
         if(IsKeyDown(KEY_A) && currentX >=0){
           currentX--;
         }
-        if(IsKeyDown(KEY_D)){
+        if(IsKeyDown(KEY_D) && currentX+getWidth(currentShape)+1 < 10){
+
           currentX++;
         }
 
