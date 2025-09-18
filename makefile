@@ -1,4 +1,4 @@
 main:
-	gcc main.c -o run -lraylib -lm -ldl -lpthread -lGL -lX11
+	gcc main.c shapes.c -o run -lraylib -lm -ldl -lpthread -lGL -lX11
 		
 
