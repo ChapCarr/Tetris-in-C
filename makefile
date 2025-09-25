@@ -1,29 +1,21 @@
-# Makefile for Tetris with raylib
+APP := tetris
+SRC := $(wildcard *.c)
+OBJ := $(SRC:.c=.o)
 
-CC = gcc
-SRC = main.c shapes.c
-OUT = run
+CC := cc
+CFLAGS := -std=c11 -O2 -Wall -Wextra
+LDLIBS := -lraylib -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenGL
 
-# Default flags
-CFLAGS = -std=c99 -Wall -Wextra -O2
+all: $(APP)
 
-# Platform detection
-UNAME_S := $(shell uname -s)
+$(APP): $(OBJ)
+	$(CC) -o $@ $^ $(LDLIBS)
 
-ifeq ($(UNAME_S), Darwin)  # macOS
-    # Homebrew installs raylib into /usr/local or /opt/homebrew
-    RAYLIB_PATH := $(shell brew --prefix raylib)
-    CFLAGS += -I$(RAYLIB_PATH)/include
-    LDFLAGS = -L$(RAYLIB_PATH)/lib -lraylib \
-              -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenGL
-else  # Linux
-    LDFLAGS = -lraylib -lm -ldl -lpthread -lGL -lX11
-endif
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(OUT)
-
-$(OUT): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(OUT) $(LDFLAGS)
+run: $(APP)
+	./$(APP)
 
 clean:
-	rm -f $(OUT)
+	rm -f $(OBJ) $(APP)
